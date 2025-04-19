@@ -24,7 +24,9 @@ It’s ideal for setting up a persistent, restartable DevOps runner that connect
    - **Scope** → *Agent Pools* → **Read & Manage**  
    - **Organisation** → *your Azure DevOps org*  
    - **Expiration** → *as needed*  
-4. Click **Create**, then copy the token — you’ll need it next.  
+4. Click **Create**, then copy the token as it is only shown once at the end of the PAT setup process, and you’ll need it next.
+
+  [More info on creating PATs](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate)
 
 ---
 
@@ -34,7 +36,10 @@ It’s ideal for setting up a persistent, restartable DevOps runner that connect
 2. Go to **Project Settings → Agent Pools**  
 3. Click **Add Pool**  
 4. Enter a name such as **Self Hosted Pool**  
-5. Save it — you’ll reference this name in the next step  
+5. Save it — you’ll reference this name in the next step
+6. Finally, tick the box **Grant access permission to all pipelines** under  **Pipeline permissions**
+
+  [More info on creating Agent pools](https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/pools-queues)
 
 ---
 
