@@ -32,4 +32,5 @@ USER agent
 # Another option is to run the agent as root.
 # ENV AGENT_ALLOW_RUNASROOT="true"
 
-ENTRYPOINT [ "./azp-start.sh" ]
+ENTRYPOINT [ "/azp/azp-start.sh" ]
+CMD []

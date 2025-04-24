@@ -13,5 +13,4 @@ services:
     volumes:
       - '${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock'
       - './azure-agent/_work:/azp/_work'
-    command: bash -c 'chmod +x /azp-start.sh && /azp-start.sh'
     restart: unless-stopped
