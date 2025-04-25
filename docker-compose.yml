@@ -2,6 +2,9 @@ version: '3.9'
 
 services:
   azure-runner:
+    environment:
+      AGENT_ALLOW_RUNASROOT: "1"
+    user: root  
     build:
       context: ./
       dockerfile: Dockerfile
@@ -12,5 +15,8 @@ services:
       - .env.azure
     volumes:
       - '${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock'
-      - './azure-agent/_work:/azp/_work'
+      - azure-work:/azp/_work
     restart: unless-stopped
+
+volumes:
+  azure-work:
