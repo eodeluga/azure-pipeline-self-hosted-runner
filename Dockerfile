@@ -1,27 +1,12 @@
-FROM ubuntu:22.04
+FROM node:22-bookworm
 ENV TARGETARCH="linux-x64"
-ENV NVM_DIR=/root/.nvm
-ENV NODE_VERSION=lts/*
 # Also can be "linux-arm", "linux-arm64".
 
 # Install dependencies
 RUN apt-get update && \
   apt-get upgrade -y && \
-  apt-get install -y curl git jq libicu70 && \
+  apt-get install -y curl git jq libicu72 && \
   rm -rf /var/lib/apt/lists/*
-  
-# Install Node and yarn
-RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/refs/heads/master/install.sh | bash && \
-  . "$NVM_DIR/nvm.sh" && \
-  nvm install $NODE_VERSION && \
-  nvm use $NODE_VERSION && \
-  nvm alias default $NODE_VERSION && \
-  npm install -g yarn
-  
-# Create symlinks for node, npm, and yarn
-RUN ln -s /root/.nvm/versions/node/$(ls /root/.nvm/versions/node)/bin/node /usr/local/bin/node && \
-  ln -s /root/.nvm/versions/node/$(ls /root/.nvm/versions/node)/bin/npm /usr/local/bin/npm && \
-  ln -s /root/.nvm/versions/node/$(ls /root/.nvm/versions/node)/bin/yarn /usr/local/bin/yarn
 
 # Install Azure CLI
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
@@ -30,7 +15,7 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 ARG HOST_UID=1000
 ARG HOST_GID=1000
 RUN groupadd -g $HOST_GID agent && \
-    useradd -u $HOST_UID -g $HOST_GID -m -d /home/agent agent
+  useradd -u $HOST_UID -g $HOST_GID -m -d /home/agent agent
 
 # Create agent directory
 WORKDIR /azp/
