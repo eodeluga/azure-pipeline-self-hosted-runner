@@ -12,8 +12,8 @@ RUN apt-get update && \
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 # Create agent user with host-matching UID/GID
-ARG HOST_UID=1000
-ARG HOST_GID=1000
+ARG HOST_UID=2000
+ARG HOST_GID=2000
 RUN groupadd -g $HOST_GID agent && \
   useradd -u $HOST_UID -g $HOST_GID -m -d /home/agent agent
 
@@ -24,6 +24,8 @@ WORKDIR /azp/
 COPY ./azp-start.sh ./
 RUN chmod +x ./azp-start.sh && \
     chown -R agent:agent /azp /home/agent
+    
+USER agent
 
 ENTRYPOINT ["/azp/azp-start.sh"]
 CMD []
