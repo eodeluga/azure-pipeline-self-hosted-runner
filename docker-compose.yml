@@ -8,10 +8,7 @@ services:
       dockerfile: Dockerfile
       tags:
         - dockeragent
-      args:
-        HOST_UID: 2000
-        HOST_GID: 2000
-    user: '2000:2000'  
+    user: root  
     environment:
       AGENT_ALLOW_RUNASROOT: "1"
     env_file:

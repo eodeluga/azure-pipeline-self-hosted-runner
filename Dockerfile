@@ -18,19 +18,12 @@ RUN apt-get update && \
 # Install Azure CLI
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
-# Create agent user with host-matching UID/GID
-ARG HOST_UID=2000
-ARG HOST_GID=2000
-RUN groupadd -g $HOST_GID agent && \
-  useradd -u $HOST_UID -g $HOST_GID -m -d /home/agent agent
-
 # Create agent directory
 WORKDIR /azp/
 
 # Copy the agent start script to image
 COPY ./azp-start.sh ./
-RUN chmod +x ./azp-start.sh && \
-    chown -R agent:agent /azp /home/agent
+RUN chmod +x ./azp-start.sh
     
 USER agent
 
