@@ -2,15 +2,18 @@ version: '3.9'
 
 services:
   azure-runner:
-    environment:
-      AGENT_ALLOW_RUNASROOT: "1"
-    user: root  
+    container_name: azure-pipelines-agent
     build:
       context: ./
       dockerfile: Dockerfile
       tags:
         - dockeragent
-    container_name: azure-pipelines-agent
+      args:
+        - HOST_UID: 2000
+        - HOST_GID: 2000
+    user: '2000:2000'  
+    environment:
+      AGENT_ALLOW_RUNASROOT: "1"
     env_file:
       - .env.azure
     volumes:
