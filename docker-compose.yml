@@ -9,8 +9,8 @@ services:
       tags:
         - dockeragent
       args:
-        - HOST_UID: 2000
-        - HOST_GID: 2000
+        HOST_UID: 2000
+        HOST_GID: 2000
     user: '2000:2000'  
     environment:
       AGENT_ALLOW_RUNASROOT: "1"
@@ -19,6 +19,12 @@ services:
     volumes:
       - '${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock'
       - azure-work:/azp/_work
+    healthcheck:
+      test: ["CMD", "pgrep", "Agent.Listener"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
     restart: unless-stopped
 
 volumes:
