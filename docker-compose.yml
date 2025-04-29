@@ -16,6 +16,8 @@ services:
     volumes:
       - '${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock'
       - azure-work:/azp/_work
+      - workspace:/workspace
+
     healthcheck:
       test: ["CMD", "pgrep", "Agent.Listener"]
       interval: 30s
@@ -26,3 +28,4 @@ services:
 
 volumes:
   azure-work:
+  workspace:

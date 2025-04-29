@@ -24,6 +24,9 @@ WORKDIR /azp/
 # Copy the agent start script to image
 COPY ./azp-start.sh ./
 RUN chmod +x ./azp-start.sh
+
+# Create workspace directory
+RUN mkdir -p /workspace
     
 USER agent
 
