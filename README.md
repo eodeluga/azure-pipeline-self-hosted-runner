@@ -45,10 +45,13 @@ It’s ideal for setting up a persistent, restartable DevOps runner that connect
 
 ### 3. Create the `.env.azure` File
 
-In the root of the repository (next to `docker-compose.yml`), create a file called `.env.azure`. **Do not** commit this file to source control.
+In the root of the repository (next to `docker-compose.yml`), create a `.env` file. **Do not** commit this file to source control.
+
+**NOTE**: Running the agent with root makes life easier but has a security impact unless you [run your Docker daemon rootless](https://docs.docker.com/engine/security/rootless/).
 
 ```env
-# .env.azure
+# .env
+AGENT_ALLOW_RUNASROOT = "true"
 AZP_TOKEN=<your-personal-access-token>
 AZP_URL=https://dev.azure.com/<your-org>
 AZP_POOL='Self Hosted Pool'
@@ -70,7 +73,7 @@ Replace the placeholders with your actual values:
 From the project root (where `docker-compose.yml` lives):
 
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 This will:
