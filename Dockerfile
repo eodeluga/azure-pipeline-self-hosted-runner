@@ -1,5 +1,6 @@
 FROM node:22-bookworm
 ENV TARGETARCH="linux-x64"
+ARG AZP_WORK
 # Also can be "linux-arm", "linux-arm64".
 
 # Install dependencies
@@ -22,13 +23,10 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 WORKDIR /azp/
 
 # Copy the agent start script to image
-COPY ./azp-start.sh ./
-RUN chmod +x ./azp-start.sh
+COPY ./start.sh ./
+RUN chmod +x ./start.sh
 
-# Create workspace directory
-RUN mkdir -p /workspace
-    
-USER agent
+# Run the agent as root.
+ENV AGENT_ALLOW_RUNASROOT="true"
 
-ENTRYPOINT ["/azp/azp-start.sh"]
-CMD []
+ENTRYPOINT [ "./start.sh" ]
