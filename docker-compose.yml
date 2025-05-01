@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   azure-runner:
     container_name: azure-pipelines-agent
@@ -8,15 +6,16 @@ services:
       dockerfile: Dockerfile
       tags:
         - dockeragent
-    user: root  
+    user: root
     environment:
-      AGENT_ALLOW_RUNASROOT: "1"
+      # Expose build context for pipeline tasks
+      AZP_BUILD_PATH: '${HOME}/.azurepipelinesagent/build'
+      AZP_BUILD_DIR: 'build'
     env_file:
-      - .env.azure
+      - .env
     volumes:
       - '${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock'
-      - azure-work:/azp/_work
-      - workspace:/workspace
+      - '${HOME}/.azurepipelinesagent/build:/azp/build'
 
     healthcheck:
       test: ["CMD", "pgrep", "Agent.Listener"]
@@ -26,6 +25,3 @@ services:
       start_period: 20s
     restart: unless-stopped
 
-volumes:
-  azure-work:
-  workspace:
